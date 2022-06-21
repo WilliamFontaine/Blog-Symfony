@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+	<article>
+		<h2>{{ article.title }}</h2>
+		<div>
+			{# Catégorie: {{ article.categorie }} #}
+			Categorie: Sport.
+		</div>
+		{% if article.image %}
+			<img src="{{ article.image }}" alt="Image de l'article">
+		{% endif %}
+		<div class="content">
+			{{ article.content }}
+		</div>
+		{% if article.modifiedAt %}
+			<div class="metadata">
+				Modifié le
+				{{ article.modifiedAt | date('d/m/Y') }}
+				à
+				{{ article.modifiedAt | date('H:i') }}.
+			</div>
+        {% endif %}
+		{% if article.createdAt %}
+			<div class="metadata">
+				Écrit le
+				{{ article.createdAt | date('d/m/Y') }}
+				à
+				{{ article.createdAt | date('H:i') }}.
+			</div>
+		{% endif %}
+	</article>
+
+{% endblock %}
