@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+	<article>
+		<h2>{{ article.title }}</h2>
+		<div>
+			Catégorie:
+			{{ article.category.title }}
+		</div>
+		{% if article.image %}
+			<img src="{{ article.image }}" alt="Image de l'article">
+		{% endif %}
+		<div class="content">
+			{{ article.content }}
+		</div>
+		{% if article.modifiedAt %}
+			<div class="metadata">
+				Modifié le
+				{{ article.modifiedAt | date('d/m/Y') }}
+				à
+				{{ article.modifiedAt | date('H:i') }}.
+			</div>
+		{% endif %}
+		{% if article.createdAt %}
+			<div class="metadata">
+				Écrit le
+				{{ article.createdAt | date('d/m/Y') }}
+				à
+				{{ article.createdAt | date('H:i') }}.
+			</div>
+		{% endif %}
+	</article>
+
+	<section id="commentaires">
+		{% for comment in article.comments %}
+			<div>
+				<div>
+					{{ comment.author }}
+					<small>({{ comment.createdAt | date('d/m/Y à H:i') }})</small>
+				</div>
+				<div>
+					{{ comment.content | raw }}
+				</div>
+			</div>
+		{% endfor %}
+	</section>
+
+{% endblock %}
+

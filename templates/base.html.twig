@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Blog Symfony
+			{% endblock %}
+		</title>
+		<link rel="stylesheet" href="{{ asset('css/navbar.css') }}"> {% block stylesheets %}{% endblock %}
+		</head>
+		<body>
+			<div class="topnav" id="myTopnav">
+				<a href="{{ path('app_blog_home') }}" class="active">SymBlog
+                    <i class="fas fa-house-user" aria-hidden="true"></i>
+				</a>
+				<a href="{{ path('app_blog') }}">Articles
+                    <i class="fa fa-book"></i>
+				</a>
+				<a href="{{ path('app_blog_create') }}">Créer un article
+                    <i class="fas fa-feather"></i>
+				</a>
+				<div class="right-lnk">
+					<a href="{{ path('app_blog_home') }}">Login / Signup
+				</a>
+			</div>
+			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                <i class="fas fa-bars"></i>
+			</a>
+		</body>
+	</html>
+</div>
+{% block body %}{% endblock %}
+<script src="https://kit.fontawesome.com/3625a86a1c.js" crossorigin="anonymous"></script>
+<script src="{{ asset('js/navbar.js') }}"></script>
+{% block javascripts %}{% endblock %}</body></html></div></html>
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
