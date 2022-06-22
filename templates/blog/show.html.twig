@@ -6,8 +6,8 @@
 	<article>
 		<h2>{{ article.title }}</h2>
 		<div>
-			{# Catégorie: {{ article.categorie }} #}
-			Categorie: Sport.
+			Catégorie:
+			{{ article.category.title }}
 		</div>
 		{% if article.image %}
 			<img src="{{ article.image }}" alt="Image de l'article">
@@ -22,7 +22,7 @@
 				à
 				{{ article.modifiedAt | date('H:i') }}.
 			</div>
-        {% endif %}
+		{% endif %}
 		{% if article.createdAt %}
 			<div class="metadata">
 				Écrit le
@@ -33,4 +33,19 @@
 		{% endif %}
 	</article>
 
+	<section id="commentaires">
+		{% for comment in article.comments %}
+			<div>
+				<div>
+					{{ comment.author }}
+					<small>({{ comment.createdAt | date('d/m/Y à H:i') }})</small>
+				</div>
+				<div>
+					{{ comment.content | raw }}
+				</div>
+			</div>
+		{% endfor %}
+	</section>
+
 {% endblock %}
+

@@ -7,8 +7,7 @@
 		<article>
 			<h2>{{ article.title }}</h2>
             <div>
-                {# Catégorie: {{ article.categorie }} #}
-                Categorie: Sport.
+                Catégorie: {{ article.category.title }}.
             </div>
 			{% if article.image %}
 				<img src="{{ article.image }}" alt="Image de l'article">
