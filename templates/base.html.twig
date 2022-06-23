@@ -6,31 +6,48 @@
 			{% block title %}Blog Symfony
 			{% endblock %}
 		</title>
-		<link rel="stylesheet" href="{{ asset('css/navbar.css') }}"> {% block stylesheets %}{% endblock %}
-		</head>
-		<body>
-			<div class="topnav" id="myTopnav">
+		<link rel="stylesheet" href="{{ asset('css/navbar.css') }}"/>
+		<div>
+			{% block stylesheets %}{% endblock %}
+		</div>
+	</head>
+	<body>
+		<header>
+			<nav class="topnav" id="myTopnav">
 				<a href="{{ path('app_blog_home') }}" class="active">SymBlog
-                    <i class="fas fa-house-user" aria-hidden="true"></i>
+					<i class="fas fa-house-user" aria-hidden="true"></i>
 				</a>
 				<a href="{{ path('app_blog') }}">Articles
-                    <i class="fa fa-book"></i>
+					<i class="fa fa-book"></i>
 				</a>
+				{% if app.user %}
 				<a href="{{ path('app_blog_create') }}">Créer un article
-                    <i class="fas fa-feather"></i>
+					<i class="fas fa-feather"></i>
 				</a>
-				<div class="right-lnk">
-					<a href="{{ path('app_blog_home') }}">Login / Signup
+					<div class="right-lnk">
+						<a href="{{ path('app_security_logout') }}">Déconnexion
+						</a>
+					</div>
+
+				{% else %}
+					<div class="right-lnk">
+						<a href="{{ path('app_security_login') }}">Connexion
+						</a>
+					</div>
+				{% endif %}
+
+				<a href="javascript:void(0);" class="icon" onclick="myFunction()">
+					<i class="fas fa-bars"></i>
 				</a>
+			</nav>
+		</header>
+
+		<div class="content"> {% block body %}{% endblock %}
 			</div>
-			<a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                <i class="fas fa-bars"></i>
-			</a>
+
+			<script src="https://kit.fontawesome.com/3625a86a1c.js" crossorigin="anonymous"></script>
+			<script src="{{ asset('js/navbar.js') }}"></script>
+			{% block javascripts %}{% endblock %}
 		</body>
 	</html>
-</div>
-{% block body %}{% endblock %}
-<script src="https://kit.fontawesome.com/3625a86a1c.js" crossorigin="anonymous"></script>
-<script src="{{ asset('js/navbar.js') }}"></script>
-{% block javascripts %}{% endblock %}</body></html></div></html>
 

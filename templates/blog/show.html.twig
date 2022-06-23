@@ -34,10 +34,15 @@
 	</article>
 
 	<section id="commentaires">
+		{% if article.comments | length != 0 %}
+			<h1>{{ article.comments | length }}
+				commentaire{% if article.comments | length > 1 %}s{% endif %} :
+			</h1>
+		{% endif %}
 		{% for comment in article.comments %}
 			<div>
 				<div>
-					{{ comment.author }}
+					{{ comment.author.username }}
 					<small>({{ comment.createdAt | date('d/m/Y à H:i') }})</small>
 				</div>
 				<div>
@@ -46,6 +51,25 @@
 			</div>
 		{% endfor %}
 	</section>
+
+	{% if app.user %}
+	<div class="formComment">
+
+		{{ form_start(formComment) }}
+
+		{{ form_row(formComment.content, { 'label': 'Commentaire', 'attr': { 'placeholder': 'Votre commentaire...' }}) }}
+
+		<button type="submit">Commenter</button>
+
+		{{ form_end(formComment) }}
+
+	</div>
+	{% else %}
+	<div class="formComment">
+		<p>Vous devez être connecté pour pouvoir commenter un article.</p>
+	</div>
+	{% endif %}
+
 
 {% endblock %}
 
