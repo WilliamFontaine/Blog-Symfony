@@ -42,7 +42,7 @@
 		{% for comment in article.comments %}
 			<div>
 				<div>
-					{{ comment.author }}
+					{{ comment.author.username }}
 					<small>({{ comment.createdAt | date('d/m/Y à H:i') }})</small>
 				</div>
 				<div>

@@ -6,9 +6,10 @@
 	{% for article in articles %}
 		<article>
 			<h2>{{ article.title }}</h2>
-            <div>
-                Catégorie: {{ article.category.title }}.
-            </div>
+			<div>
+				Catégorie:
+				{{ article.category.title }}.
+			</div>
 			{% if article.image %}
 				<img src="{{ article.image }}" alt="Image de l'article">
 			{% endif %}
@@ -20,17 +21,22 @@
 					Modifié le
 					{{ article.modifiedAt | date('d/m/Y') }}
 					à
-					{{ article.modifiedAt | date('H:i') }}.
+					{{ article.modifiedAt | date('H:i') }}
+					par
+					{{ article.author.username }}.
 				</div>
 			{% else %}
 				<div class="metadata">
 					Écrit le
 					{{ article.createdAt | date('d/m/Y') }}
 					à
-					{{ article.createdAt | date('H:i') }}.
+					{{ article.createdAt | date('H:i') }}
+					par
+					{{ article.author.username }}.
+
 				</div>
 			{% endif %}
-            <a href="{{ path('app_blog_show', {'id': article.id }) }}" class="btn">Lire la suite</a>
+			<a href="{{ path('app_blog_show', {'id': article.id }) }}" class="btn">Lire la suite</a>
 		</article>
 	{% endfor %}
 
