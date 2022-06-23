@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Article;
+use App\Entity\Category;
 use App\Entity\Comment;
 use App\Form\ArticleType;
+use App\Form\CategoryType;
 use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,6 +18,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class BlogController extends AbstractController
 {
+    #[Route(path: '/', name: 'app_blog_home')]
     #[Route('/blog', name: 'app_blog')]
     public function index(ArticleRepository $repo): Response
     {
@@ -25,43 +28,30 @@ class BlogController extends AbstractController
         ]);
     }
 
-    #[Route("/", name: "app_blog_home")]
-    public function home()
-    {
-        return $this->render('blog/home.html.twig');
-    }
-
+    #[Route('/article/{id}/edit', name: "app_blog_edit") ]
     #[Route('/article/new', name: "app_blog_create")]
-    #[Route('/article/{id}/edit', name: "app_blog_edit")]
-    public function create(Article $article = null, Request $request, EntityManagerInterface $manager)
+    public function create(Article $article = null, Request $request, EntityManagerInterface $manager): Response
     {
-        if ($this->getUser() !== null) {
-            if (!$article) {
-                $article = new Article();
-            }
-
-            $form = $this->createForm(ArticleType::class, $article);
-
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid()) {
-                if (!$article->getId()) {
-                    $article->setAuthor($this->getUser());
-                    $article->setCreatedAt(new DateTime());
-                } else {
-                    $article->setModifiedAt(new DateTime());
-                }
-                $manager->persist($article);
-                $manager->flush();
-                return $this->redirectToRoute('app_blog_show', ['id' => $article->getId()]);
-            }
-
-
-            return $this->render('blog/create.html.twig', [
-                'formArticle' => $form->createView(),
-                'editMode' => $article->getId()
-            ]);
+        if (!$article) {
+            $article = new Article();
         }
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!$article->getId()) {
+                $article->setAuthor($this->getUser());
+                $article->setCreatedAt(new DateTime());
+            } else {
+                $article->setModifiedAt(new DateTime());
+            }
+            $manager->persist($article);
+            $manager->flush();
+            return $this->redirectToRoute('app_blog_show', ['id' => $article->getId()]);
+        }
+        return $this->render('blog/create.html.twig', [
+            'formArticle' => $form->createView(),
+            'editMode' => $article->getId()
+        ]);
         return $this->redirectToRoute('app_security_login');
     }
 
@@ -69,22 +59,54 @@ class BlogController extends AbstractController
     public function show(Article $article, Request $request, EntityManagerInterface $manager)
     {
         $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setCreatedAt(new DateTime());
-            $comment->setArticle($article);
-            $comment->setAuthor($this->getUser());
-            $manager->persist($comment);
-            $manager->flush();
-            return $this->redirectToRoute('app_blog_show', ['id' => $article->getId()]);
+        if ($this->getUser()) {
+            $form = $this->createForm(CommentType::class, $comment);
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $comment->setCreatedAt(new DateTime());
+                $comment->setArticle($article);
+                $comment->setAuthor($this->getUser());
+                $manager->persist($comment);
+                $manager->flush();
+                return $this->redirectToRoute('app_blog_show', ['id' => $article->getId()]);
+            }
+            return $this->render('blog/show.html.twig', [
+                'article' => $article,
+                'formComment' => $form->createView(),
+            ]);
         }
-
         return $this->render('blog/show.html.twig', [
             'article' => $article,
-            'formComment' => $form->createView(),
+        ]);
+    }
+
+    #[Route("/article/{id}/delete", name: 'app_blog_delete')]
+    public function delete(Article $article, EntityManagerInterface $manager)
+    {
+        if ($this->getUser() === $article->getAuthor()) {
+            $manager->remove($article);
+            $manager->flush();
+            return $this->redirectToRoute('app_blog');
+        }
+        return $this->redirectToRoute('app_security_login');
+    }
+
+    #[Route("/category/new", name: 'app_blog_category')]
+    public function category(Category $category = null, Request $request, EntityManagerInterface $manager)
+    {
+        if ($category === null) {
+            $category = new Category();
+        }
+        $form = $this->createForm(CategoryType::class, $category);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->persist($category);
+            $manager->flush();
+            return $this->redirectToRoute('app_blog_home');
+        }
+        return $this->render('blog/category.html.twig', [
+            'formCategory' => $form->createView(),
+            'editMode' => $category->getId()
         ]);
     }
 }

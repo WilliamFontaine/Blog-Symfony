@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    {{ form_start(formCategory) }}
+
+    {{ form_row(formCategory.title, { 'label': 'Titre de la catégorie*', 'attr': { 'placeholder': 'Titre de la catégorie...'}}) }}
+
+    {{ form_row(formCategory.description, { 'label': 'Description de la catégorie', 'attr': { 'placeholder': 'Description de la catégorie...'}}) }}
+
+
+    <button type="submit">
+		{% if editMode %}
+			Enregister les modifications
+		{% else %}
+			Ajouter la catégorie
+		{%  endif %}
+	</button>
+
+    {{ form_end(formCategory) }}
+
+{% endblock %}

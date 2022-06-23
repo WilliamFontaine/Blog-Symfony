@@ -13,7 +13,7 @@
 			<img src="{{ article.image }}" alt="Image de l'article">
 		{% endif %}
 		<div class="content">
-			{{ article.content }}
+			{{ article.content|raw }}
 		</div>
 		{% if article.modifiedAt %}
 			<div class="metadata">
@@ -33,6 +33,15 @@
 		{% endif %}
 	</article>
 
+	{% if app.user and app.user == article.author %}
+	<div class="editArticle">
+		<a href="{{ path('app_blog_edit', { 'id': article.id }) }}">Modifier</a>
+	<div>
+	<div class="deleteArticle">
+		<a href="{{ path('app_blog_delete', {'id': article.id}) }}">Supprimer l'article</a>
+	</div>
+	{% endif %}
+
 	<section id="commentaires">
 		{% if article.comments | length != 0 %}
 			<h1>{{ article.comments | length }}
@@ -46,7 +55,7 @@
 					<small>({{ comment.createdAt | date('d/m/Y à H:i') }})</small>
 				</div>
 				<div>
-					{{ comment.content | raw }}
+					{{ comment.content|raw }}
 				</div>
 			</div>
 		{% endfor %}
