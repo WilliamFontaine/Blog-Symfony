@@ -1,9 +1,11 @@
 body {
     margin: 0;
-    font-family: arial;
 }
 
 .topnav {
+    position: fixed;
+    top:  0;
+    width: 100%;
     overflow: hidden;
     background-color: #057f8f;
 }
@@ -65,4 +67,8 @@ body {
 
 .right-lnk {
     float: right;
+}
+
+.content {
+    margin-top: 60px;
 }
