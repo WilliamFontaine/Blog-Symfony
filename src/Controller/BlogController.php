@@ -46,7 +46,7 @@ class BlogController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 if (!$article->getId()) {
-                    $article->setAuthor($this->getUser()->getUsername());
+                    $article->setAuthor($this->getUser());
                     $article->setCreatedAt(new DateTime());
                 } else {
                     $article->setModifiedAt(new DateTime());
@@ -76,7 +76,7 @@ class BlogController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setCreatedAt(new DateTime());
             $comment->setArticle($article);
-            $comment->setAuthor($this->getUser()->getUsername());
+            $comment->setAuthor($this->getUser());
             $manager->persist($comment);
             $manager->flush();
             return $this->redirectToRoute('app_blog_show', ['id' => $article->getId()]);
