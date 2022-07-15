@@ -52,10 +52,11 @@
 					{% endif %}
 					<div class="sign-btns">
 						{% if app.user %}
-							<button type="button">Déconnexion</button>
+							<a href="{{ path("app_security_logout")}}">Déconnexion</a>
 						{% else %}
-							<button type="button">Connexion</button>
-							<button type="button">Inscription</button>
+							<a href="{{ path("app_security_login")}}">Connexion</a>
+							<a href="{{ path("app_security_register")}}">Inscription</a>
+
 						{% endif %}
 					</div>
 				</div>

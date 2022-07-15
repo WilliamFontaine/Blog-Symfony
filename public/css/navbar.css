@@ -74,7 +74,7 @@ nav {
   margin-left: auto;
 }
 
-.sign-btns button {
+.sign-btns a {
   font-size: 16px;
   min-width: 90px;
   padding: 10px 5px;
@@ -82,11 +82,26 @@ nav {
   border-radius: 5px;
   cursor: pointer;
   border: none;
+  background-color: #dddddd;
+  text-decoration: none;
 }
 
-.sign-btns button:nth-child(2) {
+.sign-btns a:hover {
+  background-color: #d8d8d8;
+}
+
+.sign-btns a:active {
+  color: black;
+}
+
+.sign-btns a:nth-child(2) {
   border: none;
   background: #92c3eeb7;
+}
+
+.sign-btns a:nth-child(2):hover {
+  border: none;
+  background: #7ab7f0b7;
 }
 
 .user-icon {
