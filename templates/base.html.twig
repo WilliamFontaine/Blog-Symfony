@@ -13,46 +13,60 @@
 	</head>
 	<body>
 		<header>
-			<nav class="topnav" id="myTopnav">
-				<a href="{{ path('app_blog') }}" class="active">Articles
-					<i class="fa fa-book"></i>
+			<nav>
+				<a href="{{ path('app_blog') }}" class="nav-icon">
+					<i class="fas fa-book fa-2xl"></i>
+					<span>SymBlog</span>
 				</a>
-				{% if app.user %}
-					<a href="{{ path('app_blog_create') }}">Créer un article
-						<i class="fas fa-feather"></i>
-					</a>
 
-					{% if is_granted('ROLE_ADMIN') %}
-					<a>
-						Options
-						<i class="fas fa-cog"></i>
-					</a>
+				<div class="main-navlinks">
+					<button class="hamburger" type="button">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+					<div class="navlinks-container">
+						<a href="{{ path('app_blog') }}">
+							<i class="fa-solid fa-house"></i>
+							Accueil
+						</a>
+						<a href="{{ path('app_blog_create') }}">
+							<i class="fa-solid fa-feather-pointed"></i>
+							Créer un article
+						</a>
+						{% if is_granted('ROLE_ADMIN') %}
+							<a href="{{ path('app_blog_category') }}">Créer une catégorie</a>
+						{% endif %}
+					</div>
+				</div>
+
+				<div class="nav-authentication">
+					{% if app.user %}
+						<a href="{{ path('app_security_logout') }}">
+							<i class="fas fa-sign-out-alt"></i>
+						</a>
+					{% else %}
+						<a href="{{ path('app_security_login') }}" class="user-icon">
+							<i class="fas fa-user fa-xl"></i>
+						</a>
 					{% endif %}
-
-					<div class="right-lnk">
-						<a href="{{ path('app_security_logout') }}">Déconnexion
-						</a>
+					<div class="sign-btns">
+						{% if app.user %}
+							<button type="button">Déconnexion</button>
+						{% else %}
+							<button type="button">Connexion</button>
+							<button type="button">Inscription</button>
+						{% endif %}
 					</div>
-
-				{% else %}
-					<div class="right-lnk">
-						<a href="{{ path('app_security_login') }}">Connexion
-						</a>
-					</div>
-				{% endif %}
-
-				<a href="javascript:void(0);" class="icon" onclick="myFunction()">
-					<i class="fas fa-bars"></i>
-				</a>
+				</div>
 			</nav>
 		</header>
 
 		<div class="content"> {% block body %}{% endblock %}
-			</div>
-
-			<script src="https://kit.fontawesome.com/3625a86a1c.js" crossorigin="anonymous"></script>
-			<script src="{{ asset('js/navbar.js') }}"></script>
-			{% block javascripts %}{% endblock %}
+			</body>
 		</body>
 	</html>
-
+</div>
+<script src="https://kit.fontawesome.com/3625a86a1c.js" crossorigin="anonymous"></script>
+<script src="{{ asset('js/navbar.js') }}"></script>
+{% block javascripts %}{% endblock %}</body></html>
