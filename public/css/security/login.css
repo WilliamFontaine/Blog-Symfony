@@ -1,0 +1,115 @@
+.content {
+  margin-top: 10vh;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 4rem 8rem;
+  width: 90vh;
+  box-shadow: 0px 0px 15px 9px #8a8a8a;
+  border-radius: 10px;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 6vh;
+}
+
+form {
+  margin-top: 10vh;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70vh;
+  text-align: center;
+}
+
+form .form__group {
+  padding-left: 8rem;
+  width: 50vh;
+}
+
+form button {
+  margin-top: 8vh;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  border: 0;
+  padding: 7px 16px;
+  min-height: 36px;
+  min-width: 36px;
+  color: #fff;
+  background: #008060;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+}
+form button:hover {
+  background: #006e52;
+}
+
+.form__group {
+  position: relative;
+  padding: 15px 0 0;
+  margin-top: 10px;
+  width: 50%;
+}
+.form__field {
+  font-family: inherit;
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid #9b9b9b;
+  outline: 0;
+  font-size: 1.3rem;
+  color: #fff;
+  padding: 7px 0;
+  background: transparent;
+  transition: border-color 0.2s;
+}
+.form__field::placeholder {
+  color: transparent;
+}
+.form__field:placeholder-shown ~ .form__label {
+  font-size: 1.3rem;
+  cursor: text;
+  top: 20px;
+}
+.form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #9b9b9b;
+}
+.form__field:focus {
+  padding-bottom: 6px;
+  font-weight: 700;
+  border-width: 3px;
+  border-image: linear-gradient(to right, #11998e, #38ef7d);
+  border-image-slice: 1;
+}
+.form__field:focus ~ .form__label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: #11998e;
+  font-weight: 700;
+}
+
+.form__field:required,
+.form__field:invalid {
+  box-shadow: none;
+}
+
+.form__register {
+  text-align: left;
+  margin-top: 8vh;
+  font-size: 14px;
+  color: #333333;
+}
+
+i {
+  color: #333333;
+}

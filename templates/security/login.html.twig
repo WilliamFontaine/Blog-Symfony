@@ -1,43 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-	<form method="post">
-		{% if error %}
-			<div class="alert alert-danger">Votre identifiant et votre mot de passe de correspondent pas.</div>
-		{% endif %}
-
-		{# {% if app.user %}
-			<div class="mb-3">
-				You are logged in as
-				{{ app.user.userIdentifier }},
-				<a href="{{ path('app_security_logout') }}">Logout</a>
-			</div>
-		{% endif %} #}
-
-		<h1 class="h3 mb-3 font-weight-normal">Veuillez vous connecter</h1>
-		<label for="inputEmail">Email</label>
-		<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-		<label for="inputPassword">Mot de passe</label>
-		<input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-
-		{# <div class="checkbox mb-3">
-			<label>
-				<input type="checkbox" name="_remember_me">
-				Se souvenir de moi
-			</label>
-		</div> #}
-		
-
-
-		<button class="btn btn-lg btn-primary" type="submit">
-			Se connecter
-		</button>
-		<div class="register">
-			<a href="{{ path('app_security_register') }}">S'inscrire</a>
-		</div>
-	</form>
+{% block stylesheets %}
+	<link rel="stylesheet" href="{{ asset('css/security/login.css') }}">
 {% endblock %}
 
+{% block body %}
+	<div class="content">
+		<h1>Page de connexion</h1>
+
+		<form method="post">
+			{% if error %}
+				<div>Votre identifiant et votre mot de passe de correspondent pas.</div>
+			{% endif %}
+
+
+			<div class="form__group field">
+				<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form__field" placeholder="Email" required/>
+				<label for="inputEmail" class="form__label">
+					Email
+				</label>
+			</div>
+
+			<div class="form__group field">
+				<input type="password" name="password" id="inputPassword" class="form__field" placeholder="Mot de passe" autocomplete="current-password" required>
+				<label for="inputPassword" class="form__label">
+					Mot de passe
+				</label>
+			</div>
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+			<div>
+				<button type="submit">
+					Se connecter
+				</button>
+			</div>
+			<div class="form__register">
+				<span>
+					<i class="fa-solid fa-circle fa-2xs"></i>
+					Vous n'avez pas de compte ?
+					<a href="{{ path('app_security_register') }}">Inscrivez vous</a>
+				</span>
+			</div>
+		</form>
+	</div>
+{% endblock %}

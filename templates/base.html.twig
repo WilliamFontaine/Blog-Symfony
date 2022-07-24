@@ -35,14 +35,17 @@
 							Créer un article
 						</a>
 						{% if is_granted('ROLE_ADMIN') %}
-							<a href="{{ path('app_blog_category') }}">Créer une catégorie</a>
+							<a href="{{ path('app_blog_category') }}">
+								<i class="fa-solid fa-plus"></i>
+								Créer une catégorie
+							</a>
 						{% endif %}
 					</div>
 				</div>
 
 				<div class="nav-authentication">
 					{% if app.user %}
-						<a href="{{ path('app_security_logout') }}">
+						<a href="{{ path('app_security_logout') }}" class="user-icon">
 							<i class="fas fa-sign-out-alt"></i>
 						</a>
 					{% else %}
@@ -63,11 +66,10 @@
 			</nav>
 		</header>
 
-		<div class="content"> {% block body %}{% endblock %}
-			</body>
-		</body>
-	</html>
-</div>
-<script src="https://kit.fontawesome.com/3625a86a1c.js" crossorigin="anonymous"></script>
-<script src="{{ asset('js/navbar.js') }}"></script>
-{% block javascripts %}{% endblock %}</body></html>
+		{% block body %}{% endblock %}
+
+		<script src=" https://kit.fontawesome.com/3625a86a1c.js" crossorigin=" anonymous"></script>
+		<script src="{{ asset('js/navbar.js') }}"></script>
+		{% block javascripts %}{% endblock %}
+	</body>
+</html>

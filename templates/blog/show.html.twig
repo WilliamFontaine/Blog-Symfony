@@ -12,11 +12,11 @@
 		{% if article.image %}
 			<img src="{{ article.image }}" alt="Image de l'article">
 		{% endif %}
-		<div class="content">
+		<div>
 			{{ article.content|raw }}
 		</div>
 		{% if article.modifiedAt %}
-			<div class="metadata">
+			<div>
 				Modifié le
 				{{ article.modifiedAt | date('d/m/Y') }}
 				à
@@ -24,7 +24,7 @@
 			</div>
 		{% endif %}
 		{% if article.createdAt %}
-			<div class="metadata">
+			<div>
 				Écrit le
 				{{ article.createdAt | date('d/m/Y') }}
 				à
@@ -34,51 +34,53 @@
 	</article>
 
 	{% if app.user and app.user == article.author %}
-	<div class="editArticle">
-		<a href="{{ path('app_blog_edit', { 'id': article.id }) }}">Modifier</a>
-	<div>
-	<div class="deleteArticle">
-		<a href="{{ path('app_blog_delete', {'id': article.id}) }}">Supprimer l'article</a>
-	</div>
-	{% endif %}
-
-	<section id="commentaires">
-		{% if article.comments | length != 0 %}
-			<h1>{{ article.comments | length }}
-				commentaire{% if article.comments | length > 1 %}s{% endif %} :
-			</h1>
-		{% endif %}
-		{% for comment in article.comments %}
+		<div>
+			<a href="{{ path('app_blog_edit', { 'id': article.id }) }}">Modifier</a>
 			<div>
 				<div>
-					{{ comment.author.username }}
-					<small>({{ comment.createdAt | date('d/m/Y à H:i') }})</small>
+					<a href="{{ path('app_blog_delete', {'id': article.id}) }}">Supprimer l'article</a>
 				</div>
+			{% endif %}
+
+			<section id="commentaires">
+				{% if article.comments | length != 0 %}
+					<h1>{{ article.comments | length }}
+						commentaire
+						{% if article.comments | length > 1 %}s
+						{% endif %}
+						:
+					</h1>
+				{% endif %}
+				{% for comment in article.comments %}
+					<div>
+						<div>
+							{{ comment.author.username }}
+							<small>({{ comment.createdAt | date('d/m/Y à H:i') }})</small>
+						</div>
+						<div>
+							{{ comment.content|raw }}
+						</div>
+					</div>
+				{% endfor %}
+			</section>
+
+			{% if app.user %}
 				<div>
-					{{ comment.content|raw }}
+
+					{{ form_start(formComment) }}
+
+					{{ form_row(formComment.content, { 'label': 'Commentaire', 'attr': { 'placeholder': 'Votre commentaire...' }}) }}
+
+					<button type="submit">Commenter</button>
+
+					{{ form_end(formComment) }}
+
 				</div>
-			</div>
-		{% endfor %}
-	</section>
-
-	{% if app.user %}
-	<div class="formComment">
-
-		{{ form_start(formComment) }}
-
-		{{ form_row(formComment.content, { 'label': 'Commentaire', 'attr': { 'placeholder': 'Votre commentaire...' }}) }}
-
-		<button type="submit">Commenter</button>
-
-		{{ form_end(formComment) }}
-
-	</div>
-	{% else %}
-	<div class="formComment">
-		<p>Vous devez être connecté pour pouvoir commenter un article.</p>
-	</div>
-	{% endif %}
+			{% else %}
+				<div>
+					<p>Vous devez être connecté pour pouvoir commenter un article.</p>
+				</div>
+			{% endif %}
 
 
-{% endblock %}
-
+		{% endblock %}

@@ -11,13 +11,13 @@
 				{{ article.category.title }}.
 			</div>
 			{# {% if article.image %}
-				<img src="{{ article.image }}" alt="Image de l'article">
-			{% endif %} #}
-			<div class="summary">
+							<img src="{{ article.image }}" alt="Image de l'article">
+						{% endif %} #}
+			<div>
 				{{ article.summary }}
 			</div>
 			{% if article.modifiedAt %}
-				<div class="metadata">
+				<div>
 					Modifié le
 					{{ article.modifiedAt | date('d/m/Y') }}
 					à
@@ -26,7 +26,7 @@
 					{{ article.author.username }}.
 				</div>
 			{% else %}
-				<div class="metadata">
+				<div>
 					Écrit le
 					{{ article.createdAt | date('d/m/Y') }}
 					à
@@ -36,9 +36,8 @@
 
 				</div>
 			{% endif %}
-			<a href="{{ path('app_blog_show', {'id': article.id }) }}" class="btn">Lire la suite</a>
+			<a href="{{ path('app_blog_show', {'id': article.id }) }}">Lire la suite</a>
 		</article>
 	{% endfor %}
 
 {% endblock %}
-
